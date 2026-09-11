@@ -31,6 +31,10 @@
   font-size: var(--fs-md);
 }
 
+.hero .eyebrow {
+  display: block;
+}
+
 .hero-actions {
   display: flex;
   flex-direction: column;
@@ -103,6 +107,14 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.path-item:hover,
+.path-item:focus-visible {
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+  background-color: var(--color-surface-alt);
 }
 
 .path-badge {
@@ -118,6 +130,11 @@
   text-transform: uppercase;
 }
 
+.path-body {
+  flex: 1;
+  min-width: 0;
+}
+
 .path-item h3 {
   font-size: var(--fs-base);
   margin-bottom: 0.15rem;
@@ -126,6 +143,18 @@
 .path-item p {
   font-size: var(--fs-sm);
   margin: 0;
+}
+
+.path-arrow {
+  flex-shrink: 0;
+  font-size: var(--fs-lg);
+  color: var(--color-primary);
+  transition: transform var(--transition-fast);
+}
+
+.path-item:hover .path-arrow,
+.path-item:focus-visible .path-arrow {
+  transform: translateX(3px);
 }
 
 /* ---------- Tool Cards ---------- */
@@ -146,11 +175,48 @@
 .tool-card:hover,
 .tool-card:focus-visible {
   border-color: var(--color-primary);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+.tool-card:active {
+  transform: translateY(-1px) scale(0.99);
 }
 
 .tool-icon {
-  font-size: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(224, 164, 88, 0.12);
+  color: var(--color-primary);
+}
+
+.tool-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.tool-card:hover .tool-icon,
+.tool-card:focus-visible .tool-icon {
+  background-color: rgba(224, 164, 88, 0.22);
+}
+
+.tool-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.tool-link span {
+  transition: transform var(--transition-fast);
+}
+
+.tool-card:hover .tool-link span,
+.tool-card:focus-visible .tool-link span {
+  transform: translateX(3px);
 }
 
 .tool-card h3 {

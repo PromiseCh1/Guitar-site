@@ -19,11 +19,11 @@ if (!isset($pageJs)) {
     </div>
 
     <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="/index.php">Home</a>
-      <a href="/pages/chords.php">Chords</a>
-      <a href="/pages/scales.php">Scales</a>
-      <a href="/pages/metronome.php">Metronome</a>
-      <a href="/pages/fretboard-game.php">Fretboard Game</a>
+      <a href="<?php echo BASE_URL; ?>/index.php">Home</a>
+      <a href="<?php echo BASE_URL; ?>/pages/chords.php">Chords</a>
+      <a href="<?php echo BASE_URL; ?>/pages/scales.php">Scales</a>
+      <a href="<?php echo BASE_URL; ?>/pages/metronome.php">Metronome</a>
+      <a href="<?php echo BASE_URL; ?>/pages/fretboard-game.php">Fretboard Game</a>
     </nav>
 
     <div class="footer-contact">
@@ -39,7 +39,8 @@ if (!isset($pageJs)) {
   </div>
 </footer>
 
-<script src="/assets/js/nav.js"></script>
-<script src="/assets/js/<?php echo htmlspecialchars($pageJs, ENT_QUOTES, 'UTF-8'); ?>"></script>
+<script src="<?php echo BASE_URL; ?>/assets/js/nav.js"></script>
+<script src="<?php echo BASE_URL; ?>/assets/js/reveal.js"></script>
+<script src="<?php echo BASE_URL; ?>/assets/js/<?php echo htmlspecialchars($pageJs, ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

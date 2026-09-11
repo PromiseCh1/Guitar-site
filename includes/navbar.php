@@ -23,7 +23,7 @@ function nav_active_attrs($linkId, $currentPage) {
 ?>
 <header class="site-header">
   <div class="container navbar">
-    <a href="/index.php" class="navbar-brand">
+    <a href="<?php echo BASE_URL; ?>/index.php" class="navbar-brand">
       <span class="brand-icon" aria-hidden="true">🎸</span>
       <span>
         Promise Guitar
@@ -38,11 +38,11 @@ function nav_active_attrs($linkId, $currentPage) {
     </button>
 
     <nav class="nav-menu" id="navMenu" aria-label="Main navigation">
-      <a href="/index.php" <?php nav_active_attrs('home', $currentPage); ?>>Home</a>
-      <a href="/pages/chords.php" <?php nav_active_attrs('chords', $currentPage); ?>>Chords</a>
-      <a href="/pages/scales.php" <?php nav_active_attrs('scales', $currentPage); ?>>Scales</a>
-      <a href="/pages/metronome.php" <?php nav_active_attrs('metronome', $currentPage); ?>>Metronome</a>
-      <a href="/pages/fretboard-game.php" <?php nav_active_attrs('game', $currentPage); ?>>Fretboard Game</a>
+      <a href="<?php echo BASE_URL; ?>/index.php" <?php nav_active_attrs('home', $currentPage); ?>>Home</a>
+      <a href="<?php echo BASE_URL; ?>/pages/chords.php" <?php nav_active_attrs('chords', $currentPage); ?>>Chords</a>
+      <a href="<?php echo BASE_URL; ?>/pages/scales.php" <?php nav_active_attrs('scales', $currentPage); ?>>Scales</a>
+      <a href="<?php echo BASE_URL; ?>/pages/metronome.php" <?php nav_active_attrs('metronome', $currentPage); ?>>Metronome</a>
+      <a href="<?php echo BASE_URL; ?>/pages/fretboard-game.php" <?php nav_active_attrs('game', $currentPage); ?>>Fretboard Game</a>
     </nav>
   </div>
 </header>
