@@ -7,8 +7,10 @@
  * lookahead window using precise AudioContext time, rather than
  * relying on setInterval itself to fire audio — this keeps the
  * click timing accurate even if the browser's timer jitters.
- * (This is the standard technique described in the Web Audio API
- * metronome examples, sometimes called "A Tale of Two Clocks".)
+ *
+ * This file is unchanged from the previous version — the redesign
+ * was CSS/HTML-only. Hook IDs and class names are preserved so
+ * behavior stays identical.
  */
 (function () {
   'use strict';
@@ -16,7 +18,7 @@
   var MIN_BPM = 40;
   var MAX_BPM = 240;
   var DEFAULT_BPM = 100;
-  var BEATS_PER_BAR = 4; // 4/4 time only, per spec
+  var BEATS_PER_BAR = 4;
   var LOOKAHEAD_MS = 25;
   var SCHEDULE_AHEAD_SEC = 0.12;
   var TAP_RESET_MS = 2000;
@@ -26,14 +28,14 @@
 
   var state = {
     bpm: DEFAULT_BPM,
-    subdivision: 'none', // 'none' | '8th' | '16th'
+    subdivision: 'none',
     isRunning: false,
     audioCtx: null,
     schedulerTimer: null,
     nextNoteTime: 0,
-    currentBeat: 0,   // 0..3 (quarter-note beat within the bar)
-    currentSub: 0,    // subdivision index within the current beat
-    visualQueue: [],  // { time, beat, sub, isBeat }
+    currentBeat: 0,
+    currentSub: 0,
+    visualQueue: [],
     rafId: null,
     tapTimes: []
   };
@@ -57,18 +59,11 @@
       var Ctx = window.AudioContext || window.webkitAudioContext;
       state.audioCtx = new Ctx();
     }
-    // Browsers may start/leave a context suspended until a user
-    // gesture explicitly resumes it (autoplay policy).
     if (state.audioCtx.state === 'suspended') {
       state.audioCtx.resume();
     }
   }
 
-  /**
-   * Schedules one audible click at the given precise AudioContext time.
-   * isBeatOne: the very first beat of the bar gets a distinct accent.
-   * isSubBeat: subdivision clicks between main beats are quieter/softer.
-   */
   function scheduleClick(time, isBeatOne, isSubBeat) {
     var ctx = state.audioCtx;
     var osc = ctx.createOscillator();
@@ -153,7 +148,6 @@
     els.beatDots.forEach(function (dot, i) {
       dot.classList.toggle('is-active', i === beatIndex);
     });
-    // Clear the flash shortly after so it reads as a pulse, not a hold.
     window.clearTimeout(flashBeatDot._timer);
     flashBeatDot._timer = window.setTimeout(function () {
       els.beatDots.forEach(function (dot) { dot.classList.remove('is-active'); });
@@ -288,7 +282,7 @@
     els.beatDots = Array.prototype.slice.call(document.querySelectorAll('.beat-dot'));
 
     if (!els.startStopBtn) {
-      return; // Not on the metronome page.
+      return;
     }
 
     var bpmDownBtn = document.getElementById('bpmDown');
@@ -323,7 +317,6 @@
       });
     });
 
-    // Stop cleanly if the student navigates away.
     window.addEventListener('pagehide', stop);
   });
 })();

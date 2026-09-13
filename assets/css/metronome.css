@@ -1,136 +1,248 @@
 /* =========================================================
    METRONOME.CSS
-   Styles specific to pages/metronome.php only.
+   Metronome page — matches Chords/Scales design language.
+   Mobile-first, thumb-friendly controls.
    ========================================================= */
 
+main#main-content {
+  --font-serif: var(--font-sans);
+}
+
+/* ---------- INTRO with background photo ---------- */
 .metronome-intro {
-  padding-block: var(--space-xl) var(--space-md);
+  position: relative;
+  padding-block: clamp(4rem, 10vw, 6.5rem);
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
   text-align: center;
+  background-image: url('../images/general/practice.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.metronome-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.88) 0%,
+    rgba(10, 10, 10, 0.72) 50%,
+    rgba(10, 10, 10, 0.92) 100%
+  );
+  z-index: 0;
+}
+
+.metronome-intro .container {
+  position: relative;
+  z-index: 1;
 }
 
 .metronome-intro h1 {
-  font-size: var(--fs-2xl);
+  font-size: clamp(1.9rem, 5.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
 }
 
 .metronome-intro p {
   max-width: 520px;
-  margin: var(--space-sm) auto 0;
+  margin: 0 auto;
+  font-size: var(--fs-sm);
+  color: #d4d4d4;
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .metronome-intro p { font-size: var(--fs-md); }
+}
+
+.metronome-intro .eyebrow { color: #d4d4d4; }
+
+/* ---------- METRONOME PANEL ---------- */
+.metronome-section {
+  padding-block: 0 var(--space-2xl);
 }
 
 .metronome-panel {
-  max-width: 420px;
-  margin: 0 auto var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 480px;
+  margin-inline: auto;
+  padding: 1.75rem 1.25rem 1.5rem;
   text-align: center;
 }
 
-/* ---------- BPM display ---------- */
+@media (min-width: 640px) {
+  .metronome-panel {
+    max-width: 520px;
+    padding: 2.25rem 1.75rem 2rem;
+    gap: 1.6rem;
+  }
+}
+
+/* ---------- BPM DISPLAY ---------- */
 .bpm-display {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-md);
+  gap: 1rem;
+}
+
+.bpm-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 130px;
 }
 
 .bpm-value {
-  font-size: 3.2rem;
+  font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 12vw, 3.6rem);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: var(--color-primary);
-  min-width: 140px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #ffffff;
 }
 
 .bpm-unit {
   display: block;
-  font-size: var(--fs-sm);
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 800;
   color: var(--color-text-faint);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
+  margin-top: 0.5rem;
 }
 
+/* BPM +/- buttons */
 .bpm-btn {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background-color: var(--color-surface);
-  border: 2px solid var(--color-border);
-  font-size: var(--fs-xl);
+  background-color: var(--color-bg-alt);
+  border: 1.5px solid var(--color-border-strong);
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--color-text);
+  line-height: 1;
+  color: #ffffff;
   flex-shrink: 0;
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
-}
-
-.bpm-btn:hover {
-  border-color: var(--color-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              transform 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .bpm-btn:active {
   transform: scale(0.92);
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
 }
 
+@media (hover: hover) {
+  .bpm-btn:hover {
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* Fine controls (+/-5) */
 .bpm-fine-controls {
   display: flex;
   justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: 0.5rem;
 }
 
 .bpm-fine-btn {
-  padding: 0.4rem 0.9rem;
+  padding: 0.5rem 1.1rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  font-size: var(--fs-xs);
-  font-weight: 700;
+  border: 1.5px solid var(--color-border);
+  background-color: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 800;
   color: var(--color-text-muted);
-  min-height: 36px;
+  min-height: 40px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: border-color 0.2s ease,
+              color 0.2s ease,
+              background-color 0.2s ease,
+              transform 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.bpm-fine-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+.bpm-fine-btn:active { transform: scale(0.96); }
+
+@media (hover: hover) {
+  .bpm-fine-btn:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.06);
+  }
 }
 
-/* ---------- Beat indicator ---------- */
+/* ---------- BEAT INDICATOR ---------- */
 .beat-indicator {
   display: flex;
   justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: 0.9rem;
+  padding: 0.75rem 0;
 }
 
 .beat-dot {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background-color: var(--color-surface-alt);
-  border: 2px solid var(--color-border);
-  transition: background-color 0.08s ease, border-color 0.08s ease, transform 0.08s ease;
+  background-color: var(--color-bg-alt);
+  border: 1.5px solid var(--color-border-strong);
+  transition: background-color 0.08s ease,
+              border-color 0.08s ease,
+              transform 0.08s ease,
+              box-shadow 0.12s ease;
 }
 
 .beat-dot.is-active {
-  background-color: var(--color-secondary);
-  border-color: var(--color-secondary);
-  transform: scale(1.25);
+  background-color: #34d399;
+  border-color: #34d399;
+  transform: scale(1.35);
+  box-shadow: 0 0 20px -2px rgba(52, 211, 153, 0.6);
+}
+
+.beat-dot.is-accent {
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
 .beat-dot.is-accent.is-active {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 24px -2px rgba(239, 68, 68, 0.7);
 }
 
-/* ---------- Main controls ---------- */
+/* ---------- MAIN CONTROLS ---------- */
 .metronome-main-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: 0.65rem;
 }
 
 .metronome-main-controls .btn {
   min-height: 56px;
   font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  width: 100%;
 }
 
 @media (min-width: 480px) {
@@ -140,54 +252,139 @@
 
   .metronome-main-controls .btn {
     flex: 1;
+    width: auto;
   }
 }
 
-/* ---------- Subdivision selector ---------- */
+/* ---------- SUBDIVISION SELECTOR ---------- */
 .subdivision-group {
-  margin-bottom: var(--space-lg);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .subdivision-group h3 {
-  font-size: var(--fs-sm);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 800;
   color: var(--color-text-faint);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-sm);
+  letter-spacing: 0.16em;
+  margin: 1rem 0 0.75rem;
 }
 
 .subdivision-options {
   display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
+  gap: 0.5rem;
 }
 
 .subdivision-btn {
   flex: 1;
-  padding: 0.7rem 0.5rem;
+  padding: 0.75rem 0.4rem;
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
+  background-color: transparent;
+  font-family: var(--font-sans);
   font-weight: 700;
-  font-size: var(--fs-sm);
+  font-size: 0.78rem;
   color: var(--color-text-muted);
-  min-height: 48px;
+  min-height: 52px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background-color 0.22s ease,
+              color 0.22s ease,
+              border-color 0.22s ease,
+              transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.subdivision-btn:active { transform: scale(0.97); }
+
+.subdivision-btn:not(.is-active):hover,
+.subdivision-btn:not(.is-active):focus-visible {
+  border-color: #ffffff;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
 .subdivision-btn.is-active {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background-color: rgba(224, 164, 88, 0.1);
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
 }
 
-/* ---------- Status text ---------- */
+/* ---------- STATUS ---------- */
 .metronome-status {
   font-size: var(--fs-sm);
-  color: var(--color-text-faint);
-  min-height: 1.2em;
+  color: var(--color-text-muted);
+  min-height: 1.4em;
+  margin: 0;
+  line-height: 1.5;
 }
 
-.metronome-audio-note {
-  font-size: var(--fs-xs);
-  color: var(--color-text-faint);
-  margin-top: var(--space-md);
+/* ---------- NOTE CALLOUT ---------- */
+.metronome-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  background-color: rgba(110, 168, 254, 0.08);
+  border: 1px solid rgba(110, 168, 254, 0.22);
+  border-left: 3px solid #6ea8fe;
+  border-radius: var(--radius-sm);
+  text-align: left;
+}
+
+.metronome-note-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: #6ea8fe;
+  margin-top: 2px;
+}
+
+.metronome-note-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.metronome-note-text {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #b9d3f8;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .metronome-note-text { font-size: var(--fs-sm); }
+}
+
+/* ---------- VERY SMALL SCREENS ---------- */
+@media (max-width: 380px) {
+  .metronome-panel {
+    padding: 1.25rem 0.9rem 1.15rem;
+    gap: 1.1rem;
+  }
+
+  .bpm-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+  }
+
+  .bpm-center { min-width: 100px; }
+
+  .beat-dot {
+    width: 18px;
+    height: 18px;
+  }
+
+  .beat-indicator { gap: 0.65rem; }
+
+  .subdivision-btn {
+    font-size: 0.72rem;
+    min-height: 48px;
+    padding: 0.65rem 0.3rem;
+  }
 }
