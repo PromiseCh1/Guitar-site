@@ -1,12 +1,12 @@
 <?php
 /**
  * pages/scales.php
- * Beginner scale reference: Chromatic Scale and Major Scale,
- * with fretboard visualizations built in assets/js/scales.js.
+ * Interactive scale reference: Chromatic, Major, Pentatonic, and Blues.
+ * Mobile-optimized: swipe hint above the fretboard, thumb-friendly tabs.
  */
 
 $pageTitle       = 'Scales — Promise Guitar Learning';
-$pageDescription = 'Beginner-friendly guide to the Chromatic Scale and Major Scale, with fretboard visualizations and practice tips.';
+$pageDescription = 'Beginner-friendly scale reference with an interactive fretboard: Chromatic, Major, Minor Pentatonic, and Blues.';
 $extraCss        = 'scales.css';
 $currentPage     = 'scales';
 $pageJs          = 'scales.js';
@@ -18,106 +18,86 @@ include __DIR__ . '/../includes/navbar.php';
 <main id="main-content">
 
   <!-- INTRO -->
-  <section class="scales-intro container reveal">
-    <span class="eyebrow">Scales</span>
-    <h1>Get to know your fretboard</h1>
-    <p>
-      Scales help you learn where the notes are and train your fingers
-      to move smoothly. Start with the Chromatic Scale to explore the
-      neck, then try the Major Scale to hear a familiar musical sound.
-    </p>
-  </section>
-
-  <!-- CHROMATIC SCALE -->
-  <section class="section reveal" style="padding-top:0;">
+  <section class="scales-intro reveal">
     <div class="container">
-      <div class="scale-block card">
-        <span class="eyebrow">Scale 1</span>
-        <h2>Chromatic Scale</h2>
-        <p>
-          The chromatic scale uses <strong>every note</strong> available on
-          the guitar. Each note is one fret apart — this small distance is
-          called a <strong>semitone</strong>. It's the best way to explore
-          every position on the neck.
-        </p>
-
-        <p class="scale-sequence" id="chromaticSequence" aria-live="polite"></p>
-
-        <div class="scale-fretboard-holder">
-          <div id="chromaticFretboard"></div>
-        </div>
-        <div class="scale-legend">
-          <span><span class="scale-legend-swatch" style="background-color: var(--color-secondary);"></span>Every note, one fret at a time</span>
-        </div>
-
-        <h3 style="margin-top: var(--space-lg);">What to Practice</h3>
-        <ul class="scale-practice-list">
-          <li>Start slowly — around 60 BPM on the metronome.</li>
-          <li>Play one note per beat, one fret at a time.</li>
-          <li>Use one finger per fret if you can (1-2-3-4 on frets 1-2-3-4).</li>
-          <li>Only speed up once every note sounds clean.</li>
-          <li>Try it going up the neck, then coming back down.</li>
-        </ul>
-      </div>
+      <span class="eyebrow">Scales</span>
+      <h1>Get to know your fretboard</h1>
+      <p>
+        Scales train your fingers to move smoothly and show you where
+        the notes live. Pick one below and explore it across the whole neck.
+      </p>
     </div>
   </section>
 
-  <!-- MAJOR SCALE -->
-  <section class="section reveal" style="background-color: var(--color-bg-alt);">
+  <!-- SCALE BROWSER + PANEL -->
+  <section class="scale-browser reveal">
     <div class="container">
-      <div class="scale-block card">
-        <span class="eyebrow">Scale 2</span>
-        <h2>Major Scale</h2>
-        <p>
-          The major scale is the happy, familiar sound you hear in most
-          pop and folk songs. It only uses <strong>7 different notes</strong>
-          before repeating. The notes follow a pattern of
-          <strong>whole steps (W)</strong> and <strong>half steps (H)</strong>:
-        </p>
 
-        <div class="scale-step-pattern" aria-hidden="true">
-          <span class="step-w">W</span>
-          <span class="step-w">W</span>
-          <span class="step-h">H</span>
-          <span class="step-w">W</span>
-          <span class="step-w">W</span>
-          <span class="step-w">W</span>
-          <span class="step-h">H</span>
+      <div class="scale-tabs" role="tablist" aria-label="Scale type">
+        <button type="button" class="scale-tab is-active" data-scale="chromatic" role="tab" aria-selected="true">Chromatic</button>
+        <button type="button" class="scale-tab" data-scale="major" role="tab" aria-selected="false">Major</button>
+        <button type="button" class="scale-tab" data-scale="pentatonic" role="tab" aria-selected="false">Pentatonic</button>
+        <button type="button" class="scale-tab" data-scale="blues" role="tab" aria-selected="false">Blues</button>
+      </div>
+
+      <!-- SCALE PANEL -->
+      <div class="scale-panel card">
+        <div class="scale-panel-head">
+          <h2 class="scale-panel-name" id="scaleName">Chromatic Scale</h2>
+          <span class="scale-badge" id="scaleBadge">12 notes</span>
         </div>
-        <p style="text-align:center; font-size: var(--fs-sm);">
-          A whole step (W) moves 2 frets. A half step (H) moves 1 fret.
-        </p>
 
-        <div class="root-selector">
-          <label for="majorRootSelect">Choose a root note:</label>
-          <select id="majorRootSelect">
+        <div class="scale-root-row" id="scaleRootRow" hidden>
+          <label for="scaleRoot">Root note</label>
+          <select id="scaleRoot">
             <option value="C">C</option>
-            <option value="G">G</option>
             <option value="D">D</option>
-            <option value="A">A</option>
             <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="A">A</option>
           </select>
         </div>
 
-        <p class="scale-sequence" id="majorSequence" aria-live="polite"></p>
+        <ul class="scale-points" id="scalePoints"></ul>
 
-        <div class="scale-fretboard-holder">
-          <div id="majorFretboard"></div>
-        </div>
-        <div class="scale-legend">
-          <span><span class="scale-legend-swatch" style="background-color: var(--color-primary);"></span>Root note</span>
-          <span><span class="scale-legend-swatch" style="background-color: var(--color-secondary);"></span>Other scale notes</span>
+        <div class="scale-formula-block" id="scaleFormulaBlock">
+          <span class="scale-block-label">Step formula</span>
+          <div class="scale-pattern" id="scalePattern"></div>
+          <p class="scale-formula-note" id="scaleFormulaNote"></p>
         </div>
 
-        <h3 style="margin-top: var(--space-lg);">What to Practice</h3>
-        <ul class="scale-practice-list">
-          <li>Play the scale slowly, one note at a time, ascending.</li>
-          <li>Then play it descending, back to the root note.</li>
-          <li>Say each note name out loud as you play it.</li>
-          <li>Use a metronome and keep the timing even.</li>
-          <li>Only increase speed once you can play it without mistakes.</li>
-        </ul>
+        <div class="scale-arrow-block" id="scaleSequenceBlock">
+          <span class="scale-block-label">Notes in order</span>
+          <p class="scale-sequence-arrows" id="scaleSequence"></p>
+        </div>
+
+        <!-- Fretboard with mobile swipe hint -->
+        <div class="scale-fretboard-wrap">
+          <p class="scale-scroll-hint" aria-hidden="true">
+            <span>Swipe to see all 12 frets</span>
+            <span class="scroll-hint-arrow">→</span>
+          </p>
+          <div class="scale-fretboard-holder">
+            <div id="scaleFretboard"></div>
+          </div>
+        </div>
+
+        <div class="scale-legend" id="scaleLegend"></div>
       </div>
+
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section class="scale-practice reveal section--alt">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">How to Practice</span>
+        <h2>Getting the most out of scales</h2>
+        <p>Apply these ideas to any scale above.</p>
+      </div>
+      <ol class="practice-steps-list" id="scalePracticeSteps"></ol>
     </div>
   </section>
 
