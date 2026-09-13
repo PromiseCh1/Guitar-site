@@ -1,231 +1,860 @@
 /* =========================================================
    FRETBOARD-GAME.CSS
-   Styles specific to pages/fretboard-game.php only.
+   Setup with colored mode picker, checkbox-with-green-tick
+   selectors, zoomable fretboard, and a countdown timer.
    ========================================================= */
 
+main#main-content {
+  --font-serif: var(--font-sans);
+}
+
+/* ---------- INTRO ---------- */
 .game-intro {
-  padding-block: var(--space-xl) var(--space-md);
+  padding-block: clamp(1.75rem, 5vw, 3.25rem) var(--space-md);
   text-align: center;
 }
 
 .game-intro h1 {
-  font-size: var(--fs-2xl);
+  font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .game-intro p {
-  max-width: 520px;
+  max-width: 540px;
   margin: var(--space-sm) auto 0;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
 }
 
-/* ---------- String selection (setup screen) ---------- */
-.game-setup {
-  max-width: 480px;
-  margin: 0 auto;
+@media (min-width: 640px) {
+  .game-intro p { font-size: var(--fs-md); }
+}
+
+/* ---------- SETUP CARD ---------- */
+.game-setup-section { padding-block: 0 var(--space-xl); }
+
+.game-setup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: 1.5rem 1.15rem 1.5rem;
+  background-color: #161616;
+  border: 1.5px solid #2b2b2b;
+  border-radius: var(--radius-md);
+}
+
+@media (min-width: 640px) {
+  .game-setup-card { padding: 2rem 1.75rem; gap: 1.6rem; }
+}
+
+.setup-head { text-align: center; }
+
+.setup-head h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f5f5f5;
+  margin: 0 0 0.3rem;
+}
+
+.setup-head p { font-size: var(--fs-sm); color: #a3a3a3; margin: 0; }
+
+/* =========================================================
+   MODE TABS — colored per mode
+   ========================================================= */
+.mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+@media (min-width: 520px) {
+  .mode-tabs { grid-template-columns: repeat(4, 1fr); }
+}
+
+.mode-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.75rem 0.5rem;
+  min-height: 68px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #333333;
+  background-color: #1e1e1e;
+  color: #b5b5b5;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background-color 0.22s ease,
+              color 0.22s ease,
+              border-color 0.22s ease,
+              box-shadow 0.22s ease,
+              transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.mode-tab:active { transform: scale(0.97); }
+
+.mode-tab:not(.is-active):hover,
+.mode-tab:not(.is-active):focus-visible {
+  border-color: #a3a3a3;
+  color: #f5f5f5;
+  background-color: #262626;
+}
+
+.mode-tab-name { font-size: 0.9rem; font-weight: 800; letter-spacing: 0.02em; }
+.mode-tab-hint { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.02em; opacity: 0.75; }
+
+.mode-tab[data-mode="easy"].is-active {
+  background-color: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.1),
+              inset 0 0 22px -10px rgba(52, 211, 153, 0.5);
+}
+.mode-tab[data-mode="easy"].is-active .mode-tab-hint { color: #6ee7b7; opacity: 1; }
+
+.mode-tab[data-mode="medium"].is-active {
+  background-color: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1),
+              inset 0 0 22px -10px rgba(251, 191, 36, 0.5);
+}
+.mode-tab[data-mode="medium"].is-active .mode-tab-hint { color: #fcd34d; opacity: 1; }
+
+.mode-tab[data-mode="hard"].is-active {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1),
+              inset 0 0 22px -10px rgba(239, 68, 68, 0.5);
+}
+.mode-tab[data-mode="hard"].is-active .mode-tab-hint { color: #fca5a5; opacity: 1; }
+
+.mode-tab[data-mode="manual"].is-active {
+  background-color: rgba(249, 115, 22, 0.12);
+  color: #f97316;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1),
+              inset 0 0 22px -10px rgba(249, 115, 22, 0.5);
+}
+.mode-tab[data-mode="manual"].is-active .mode-tab-hint { color: #fdba74; opacity: 1; }
+
+.mode-description {
   text-align: center;
+  font-size: 0.86rem;
+  color: #d4d4d4;
+  margin: -0.4rem 0 0;
+  line-height: 1.5;
+  padding: 0.7rem 0.9rem;
+  background-color: #1e1e1e;
+  border: 1px solid #333333;
+  border-left: 3px solid #6a6a6a;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.25s ease;
 }
 
+.mode-tabs:has(.mode-tab[data-mode="easy"].is-active) ~ .mode-description { border-left-color: #34d399; }
+.mode-tabs:has(.mode-tab[data-mode="medium"].is-active) ~ .mode-description { border-left-color: #fbbf24; }
+.mode-tabs:has(.mode-tab[data-mode="hard"].is-active) ~ .mode-description { border-left-color: #ef4444; }
+.mode-tabs:has(.mode-tab[data-mode="manual"].is-active) ~ .mode-description { border-left-color: #f97316; }
+
+/* ---------- SETUP BLOCK ---------- */
+.setup-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 1rem;
+  border-top: 1px solid #2b2b2b;
+}
+
+.setup-block[hidden] { display: none; }
+
+.setup-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.setup-block-head h3 {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8f8f8f;
+  margin: 0;
+}
+
+.setup-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d4d4d4;
+  font-variant-numeric: tabular-nums;
+  padding: 3px 9px;
+  background-color: #262626;
+  border-radius: 999px;
+}
+
+/* =========================================================
+   SHARED CHECKBOX-CARD STYLE
+   ========================================================= */
 .string-select-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-sm);
-  margin-block: var(--space-lg);
+  gap: 0.5rem;
 }
 
-@media (min-width: 480px) {
-  .string-select-grid {
-    grid-template-columns: repeat(3, 1fr);
+@media (min-width: 520px) {
+  .string-select-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.string-checkbox,
+.note-checkbox {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #2b2b2b;
+  background-color: #1a1a1a;
+  color: #b5b5b5;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s ease,
+              background-color 0.2s ease,
+              color 0.2s ease,
+              transform 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.string-checkbox { padding: 0.85rem 0.95rem; }
+.note-checkbox   { padding: 0.75rem 0.85rem; }
+
+.string-checkbox input,
+.note-checkbox input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.string-checkbox:active,
+.note-checkbox:active { transform: scale(0.98); }
+
+@media (hover: hover) {
+  .string-checkbox:hover,
+  .note-checkbox:hover {
+    border-color: #4a4a4a;
+    background-color: #1f1f1f;
   }
 }
 
-.string-checkbox {
+.string-checkbox-label,
+.note-checkbox-label {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.9rem 0.6rem;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
-  background-color: var(--color-surface);
-  font-weight: 600;
-  font-size: var(--fs-sm);
-  min-height: 52px;
-  cursor: pointer;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  gap: 0.7rem;
+  width: 100%;
 }
 
-.string-checkbox input {
+.string-checkbox-label::before,
+.note-checkbox-label::before {
+  content: "";
   width: 20px;
   height: 20px;
-  accent-color: var(--color-primary);
+  border-radius: 5px;
+  border: 1.5px solid #555555;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 13px 13px;
+  flex-shrink: 0;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
 }
 
-.string-checkbox.is-checked {
-  border-color: var(--color-primary);
-  background-color: rgba(224, 164, 88, 0.1);
+.string-checkbox:has(input:checked),
+.note-checkbox:has(input:checked) {
+  border-color: #3a3a3a;
+  color: #f5f5f5;
 }
 
+.string-checkbox:has(input:checked) .string-checkbox-label::before,
+.note-checkbox:has(input:checked) .note-checkbox-label::before {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 8 6.5 11.5 13 4'/%3E%3C/svg%3E");
+}
+
+/* =========================================================
+   NOTE SELECTOR
+   ========================================================= */
+.note-select-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+}
+
+@media (min-width: 520px) {
+  .note-select-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 640px) {
+  .note-select-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+.note-checkbox {
+  font-size: 0.86rem;
+  justify-content: flex-start;
+  min-height: 50px;
+}
+
+.note-checkbox-label { gap: 0.5rem; }
+
+.note-checkbox-label::before {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background-size: 11px 11px;
+}
+
+.note-checkbox.is-sharp .note-checkbox-label { font-style: italic; letter-spacing: 0.02em; }
+
+/* Quick actions */
+.note-quick-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
+
+.quick-btn {
+  padding: 0.45rem 0.9rem;
+  min-height: 36px;
+  border-radius: 999px;
+  border: 1.5px solid #333333;
+  background-color: #1e1e1e;
+  color: #b5b5b5;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (hover: hover) {
+  .quick-btn:hover { border-color: #ffffff; color: #ffffff; background-color: #262626; }
+}
+
+/* ---------- SETUP ERROR ---------- */
 .game-setup-error {
-  color: var(--color-error);
-  font-size: var(--fs-sm);
+  color: #f87171;
+  font-size: 0.82rem;
+  font-weight: 700;
   min-height: 1.2em;
-  margin-bottom: var(--space-sm);
+  margin: 0;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
 }
 
-/* ---------- Game area ---------- */
+.game-setup-error:not(:empty) {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* ---------- GAME PLAY ---------- */
+.game-play-section { padding-block: 0 var(--space-xl); }
+
 .game-area {
-  max-width: 700px;
-  margin: 0 auto;
+  max-width: 900px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
 }
 
+.game-mode-bar { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
+
+.game-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background-color: rgba(52, 211, 153, 0.14);
+  color: #34d399;
+  border: 1px solid #34d399;
+}
+
+.game-mode-sub {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #8f8f8f;
+  letter-spacing: 0.02em;
+}
+
+/* Stats */
 .game-stats-bar {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: 0.5rem;
 }
 
 @media (min-width: 560px) {
-  .game-stats-bar {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  .game-stats-bar { grid-template-columns: repeat(6, 1fr); }
 }
 
 .game-stat {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background-color: #161616;
+  border: 1px solid #2b2b2b;
   border-radius: var(--radius-sm);
-  padding: var(--space-sm);
+  padding: 0.65rem 0.5rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 .game-stat-value {
   display: block;
-  font-size: var(--fs-md);
-  font-weight: 700;
-  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .game-stat-label {
-  font-size: var(--fs-xs);
-  color: var(--color-text-faint);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #8f8f8f;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   FRETBOARD with toolbar
+   ========================================================= */
+.game-fretboard-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.game-fretboard-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.game-scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8f8f8f;
+  background-color: #1e1e1e;
+  border: 1px solid #2b2b2b;
+  border-radius: 999px;
+  flex-shrink: 0;
 }
 
-.game-level-note {
+.scroll-hint-arrow {
+  display: inline-block;
+  animation: hintSlide 1.6s ease-in-out infinite;
+  color: #ffffff;
+}
+
+@keyframes hintSlide {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-arrow { animation: none; }
+}
+
+.game-scroll-hint.is-hidden { display: none; }
+
+/* Zoom controls */
+.fretboard-zoom-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.35rem;
+  background-color: #1e1e1e;
+  border: 1px solid #2b2b2b;
+  border-radius: 999px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.zoom-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #3a3a3a;
+  background-color: #262626;
+  color: #f5f5f5;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s ease,
+              border-color 0.18s ease,
+              transform 0.12s ease,
+              opacity 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.zoom-btn:active:not(:disabled) {
+  transform: scale(0.9);
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
+}
+
+@media (hover: hover) {
+  .zoom-btn:not(:disabled):hover {
+    border-color: #ffffff;
+    color: #ffffff;
+    background-color: #333333;
+  }
+}
+
+.zoom-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.zoom-label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #d4d4d4;
+  min-width: 44px;
   text-align: center;
-  font-size: var(--fs-xs);
-  color: var(--color-text-faint);
-  margin-bottom: var(--space-md);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Fretboard ---------- */
+/* Fretboard holder — inline-block trick keeps fret 1 reachable when
+   the SVG is wider than the container. */
 .game-fretboard-holder {
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  scroll-behavior: smooth;
+  background-color: #121212;
+  border: 1px solid #2b2b2b;
   border-radius: var(--radius-md);
-  padding: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  padding: 0.6rem 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a4a transparent;
+}
+
+.game-fretboard-holder::-webkit-scrollbar { height: 6px; }
+.game-fretboard-holder::-webkit-scrollbar-track { background: transparent; }
+.game-fretboard-holder::-webkit-scrollbar-thumb { background-color: #4a4a4a; border-radius: 3px; }
+
+#gameFretboard {
+  display: inline-block;
+  min-width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .game-fretboard-svg {
-  width: 100%;
-  min-width: 640px;
+  display: inline-block;
+  vertical-align: middle;
   height: auto;
-  display: block;
+  margin: 0;
 }
 
-.game-nut { stroke: var(--color-text); stroke-width: 5; }
-.game-fretline { stroke: var(--color-border); stroke-width: 2; }
-.game-stringline { stroke: var(--color-text-faint); stroke-width: 1.5; }
-.game-string-label { fill: var(--color-text-faint); font-size: 13px; font-weight: 700; text-anchor: middle; }
-.game-fret-marker { fill: var(--color-border); }
-.game-fret-number { fill: var(--color-text-faint); font-size: 11px; text-anchor: middle; }
+/* SVG elements */
+.game-nut { stroke: #f5f5f5; stroke-width: 5; stroke-linecap: round; }
+.game-fretline { stroke: #3a3a3a; stroke-width: 1.5; }
+.game-stringline { stroke: #5a5a5a; }
+
+.game-string-label {
+  fill: #d4c8b0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.game-fret-marker { fill: #3a3a3a; }
+
+.game-fret-number {
+  fill: #a3a3a3;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+}
 
 .game-question-dot {
-  fill: var(--color-primary);
-  stroke: var(--color-bg);
-  stroke-width: 2;
+  fill: #ef4444;
+  stroke: rgba(10, 10, 10, 0.5);
+  stroke-width: 1.2;
 }
 
 .game-question-pulse {
   fill: none;
-  stroke: var(--color-primary);
+  stroke: #ef4444;
   stroke-width: 2;
-  opacity: 0.6;
+  opacity: 0.55;
+  animation: questionPulse 1.6s ease-in-out infinite;
+  transform-origin: center;
 }
 
-/* ---------- Question + answers ---------- */
+@keyframes questionPulse {
+  0%   { opacity: 0.55; }
+  50%  { opacity: 0.15; }
+  100% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-question-pulse { animation: none; opacity: 0.4; }
+}
+
+/* =========================================================
+   COUNTDOWN TIMER
+   ========================================================= */
+.game-timer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 0.9rem;
+  background-color: #161616;
+  border: 1px solid #2b2b2b;
+  border-radius: var(--radius-sm);
+}
+
+.game-timer[hidden] { display: none; }
+
+.game-timer-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.game-timer-label {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8f8f8f;
+}
+
+.game-timer-text {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f5f5f5;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.game-timer-track {
+  height: 6px;
+  border-radius: 999px;
+  background-color: #262626;
+  overflow: hidden;
+}
+
+.game-timer-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background-color: #34d399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.game-timer-fill.is-warning {
+  background-color: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+}
+
+.game-timer-fill.is-critical {
+  background-color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+}
+
+/* Subtle breathing animation on the critical bar */
+.game-timer-fill.is-critical {
+  animation: criticalPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes criticalPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-timer-fill.is-critical { animation: none; }
+}
+
+/* ---------- QUESTION + ANSWERS ---------- */
 .game-question {
   text-align: center;
-  font-size: var(--fs-lg);
-  margin-bottom: var(--space-md);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+  font-weight: 700;
+  color: #f5f5f5;
+  margin: 0.25rem 0 0;
 }
 
 .game-answers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-sm);
-  max-width: 420px;
-  margin: 0 auto var(--space-md);
+  gap: 0.5rem;
+  max-width: 460px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .game-answers-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 .game-answer-btn {
-  min-height: 60px;
+  min-height: 62px;
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
-  background-color: var(--color-surface);
-  font-size: var(--fs-lg);
-  font-weight: 700;
-  color: var(--color-text);
-  transition: border-color var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
+  border: 1.5px solid #3a3a3a;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease,
+              border-color 0.18s ease, transform 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.game-answer-btn:hover:not(:disabled) {
-  border-color: var(--color-primary);
-}
+.game-answer-btn:active:not(:disabled) { transform: scale(0.95); }
 
-.game-answer-btn:active:not(:disabled) {
-  transform: scale(0.95);
+@media (hover: hover) {
+  .game-answer-btn:hover:not(:disabled) {
+    border-color: #ffffff;
+    background-color: #262626;
+  }
 }
 
 .game-answer-btn.is-correct {
-  border-color: var(--color-success);
-  background-color: rgba(111, 191, 115, 0.18);
-  color: var(--color-success);
+  background-color: #34d399;
+  color: #0a0a0a;
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
 }
 
 .game-answer-btn.is-incorrect {
-  border-color: var(--color-error);
-  background-color: rgba(226, 104, 95, 0.18);
-  color: var(--color-error);
+  background-color: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
 }
 
-.game-answer-btn:disabled {
-  cursor: default;
-  opacity: 0.85;
-}
+.game-answer-btn:disabled { cursor: default; opacity: 0.85; }
+.game-answer-btn.is-correct:disabled,
+.game-answer-btn.is-incorrect:disabled { opacity: 1; }
 
+/* ---------- FEEDBACK ---------- */
 .game-feedback {
   text-align: center;
-  font-size: var(--fs-md);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
   font-weight: 700;
   min-height: 1.6em;
-  margin-bottom: var(--space-md);
+  margin: 0.25rem 0 0;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
 }
 
+.game-feedback:empty { padding: 0; background: none; border: none; }
+
 .game-feedback.is-correct-text {
-  color: var(--color-success);
+  color: #a7f3d0;
+  background-color: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.22);
 }
 
 .game-feedback.is-incorrect-text {
-  color: var(--color-error);
+  color: #fecaca;
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.01em;
 }
 
+/* ---------- FOOTER ACTIONS ---------- */
 .game-footer-actions {
-  text-align: center;
-  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 480px) {
+  .game-footer-actions { flex-direction: row; justify-content: center; }
+  .game-footer-actions .btn { min-width: 160px; }
+}
+
+/* ---------- VERY SMALL SCREENS ---------- */
+@media (max-width: 380px) {
+  .game-setup-card { padding: 1.15rem 0.9rem; gap: 1.15rem; }
+  .mode-tab { min-height: 60px; padding: 0.65rem 0.4rem; }
+  .mode-tab-name { font-size: 0.82rem; }
+  .mode-tab-hint { font-size: 0.62rem; }
+  .string-checkbox { min-height: 50px; padding: 0.75rem 0.7rem; font-size: 0.82rem; }
+  .string-checkbox-label { gap: 0.55rem; }
+  .string-checkbox-label::before { width: 18px; height: 18px; background-size: 11px 11px; }
+  .note-checkbox { min-height: 46px; padding: 0.6rem 0.6rem; font-size: 0.78rem; }
+  .note-checkbox-label { gap: 0.4rem; }
+  .note-checkbox-label::before { width: 16px; height: 16px; background-size: 10px 10px; }
+  .game-answer-btn { min-height: 56px; font-size: 1rem; }
+  .game-stat-value { font-size: 1rem; }
+  .game-stat-label { font-size: 0.58rem; }
+  .quick-btn { padding: 0.4rem 0.7rem; font-size: 0.68rem; min-height: 32px; }
+  .zoom-btn { width: 30px; height: 30px; font-size: 1rem; }
+  .zoom-label { min-width: 40px; font-size: 0.68rem; }
+  .game-scroll-hint { font-size: 0.62rem; padding: 0.4rem 0.6rem; }
+  .game-timer { padding: 0.6rem 0.7rem; }
+  .game-timer-text { font-size: 0.85rem; }
 }
