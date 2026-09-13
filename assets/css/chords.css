@@ -1,107 +1,180 @@
 /* =========================================================
    CHORDS.CSS
-   Styles specific to pages/chords.php only.
+   Chord page: intro with photo, tabs, grid, panel with
+   colored finger diagram, green tip, practice steps,
+   progressions (with audio), teacher note.
    ========================================================= */
 
+/* Force sans-serif throughout the chords page */
+main#main-content {
+  --font-serif: var(--font-sans);
+}
+
+/* ---------- INTRO with background photo ---------- */
 .chords-intro {
-  padding-block: var(--space-xl) var(--space-lg);
+  position: relative;
+  padding-block: clamp(4rem, 10vw, 6.5rem);
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
   text-align: center;
+  background-image: url('../images/general/chord-section.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.chords-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.88) 0%,
+    rgba(10, 10, 10, 0.72) 50%,
+    rgba(10, 10, 10, 0.92) 100%
+  );
+  z-index: 0;
+}
+
+.chords-intro .container {
+  position: relative;
+  z-index: 1;
 }
 
 .chords-intro h1 {
-  font-size: var(--fs-2xl);
+  font-size: clamp(1.9rem, 5.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
 }
 
 .chords-intro p {
-  max-width: 560px;
-  margin: var(--space-sm) auto 0;
+  max-width: 520px;
+  margin: 0 auto;
+  font-size: var(--fs-md);
+  color: #d4d4d4;
+  line-height: 1.6;
 }
 
-/* ---------- Tabs ---------- */
+.chords-intro .eyebrow { color: #d4d4d4; }
+
+/* ---------- Tabs with hover ---------- */
 .chord-tabs {
   display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: 0.5rem;
+  margin-bottom: var(--space-md);
 }
 
 .chord-tab {
-  padding: 0.7rem 1.6rem;
+  flex: 1;
+  padding: 0.75rem 1rem;
+  min-height: 48px;
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: var(--fs-sm);
-  color: var(--color-text-muted);
-  min-height: 44px;
-  transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+  letter-spacing: 0.04em;
+  transition: background-color 0.22s ease,
+              color 0.22s ease,
+              border-color 0.22s ease,
+              box-shadow 0.22s ease,
+              transform 0.15s ease;
+}
+
+.chord-tab:active { transform: scale(0.98); }
+
+.chord-tab:not(.is-active):hover,
+.chord-tab:not(.is-active):focus-visible {
+  border-color: #ffffff;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .chord-tab.is-active {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background-color: rgba(224, 164, 88, 0.1);
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
 }
 
-/* ---------- Chord Grid ---------- */
+/* ---------- Chord grid ---------- */
 .chord-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-sm);
-  max-width: 520px;
-  margin: 0 auto var(--space-xl);
+  gap: 0.5rem;
+  max-width: 560px;
+  margin: 0 auto var(--space-lg);
 }
 
 .chord-grid-btn {
   aspect-ratio: 1 / 1;
-  border: 2px solid var(--color-border);
+  min-height: 66px;
+  border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm);
   background-color: var(--color-surface);
-  font-size: var(--fs-lg);
-  font-weight: 700;
   color: var(--color-text);
-  min-height: 56px;
-  transition: border-color var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: border-color var(--transition-fast),
+              transform var(--transition-fast),
+              background-color var(--transition-fast),
+              color var(--transition-fast);
 }
 
-.chord-grid-btn:hover {
-  border-color: var(--color-primary);
-}
+.chord-grid-btn:active { transform: scale(0.94); }
 
-.chord-grid-btn:active {
-  transform: scale(0.95);
+@media (hover: hover) {
+  .chord-grid-btn:hover { border-color: #ffffff; }
 }
 
 .chord-grid-btn.is-selected {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
-  color: #1a140c;
+  border-color: #ffffff;
+  background-color: #ffffff;
+  color: #0a0a0a;
 }
 
 @media (min-width: 500px) {
-  .chord-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
+  .chord-grid { grid-template-columns: repeat(7, 1fr); }
+  .chord-grid-btn { min-height: 72px; font-size: 1.3rem; }
 }
 
-/* ---------- Selected Chord Panel ---------- */
+/* ---------- Selected chord panel ---------- */
 .chord-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
+  gap: 1.25rem;
   text-align: center;
-  max-width: 420px;
+  max-width: 480px;
   margin-inline: auto;
+  padding: 1.75rem 1.25rem;
 }
 
 .chord-panel-name {
-  font-size: var(--fs-xl);
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--color-text);
 }
 
 .chord-diagram-holder {
   width: 100%;
-  max-width: 260px;
+  max-width: 300px;
   margin-inline: auto;
+  padding: 1rem 0.75rem;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chord-diagram-svg {
@@ -110,99 +183,135 @@
   display: block;
 }
 
-/* SVG element styling (targets elements created by chords.js) */
-.chord-nut {
-  stroke: var(--color-text);
-  stroke-width: 4;
+.chord-diagram-holder.diagram-enter {
+  animation: diagramFade 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.chord-fretline {
-  stroke: var(--color-border);
-  stroke-width: 2;
+@keyframes diagramFade {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.chord-stringline {
-  stroke: var(--color-text-faint);
-  stroke-width: 1.5;
-}
+/* ---------- SVG elements ---------- */
+.chord-nut { stroke: #f5f5f5; stroke-width: 4; stroke-linecap: round; }
+.chord-fretline { stroke: #4a4a4a; stroke-width: 1.5; }
+.chord-stringline { stroke: #6a6a6a; stroke-width: 1.2; }
 
 .chord-string-label {
-  fill: var(--color-text-faint);
+  fill: #a3a3a3;
+  font-family: var(--font-sans);
   font-size: 11px;
-  text-anchor: middle;
   font-weight: 600;
+  text-anchor: middle;
 }
 
-.chord-fret-label {
-  fill: var(--color-text-muted);
+.chord-fret-num {
+  fill: #b5aa9a;
+  font-family: var(--font-sans);
   font-size: 12px;
-  text-anchor: end;
   font-weight: 700;
 }
 
-.chord-open-marker {
-  fill: none;
-  stroke: var(--color-secondary);
-  stroke-width: 2.5;
-}
+.chord-open-marker { fill: none; stroke: #6ea8fe; stroke-width: 2.2; }
 
 .chord-mute-marker {
-  fill: var(--color-error);
-  font-size: 16px;
+  fill: #ef4444;
+  font-family: var(--font-sans);
+  font-size: 15px;
   font-weight: 700;
   text-anchor: middle;
 }
 
-.chord-dot {
-  fill: var(--color-primary);
-}
+.chord-dot { stroke: rgba(10, 10, 10, 0.35); stroke-width: 1; }
+.chord-dot.finger-1 { fill: #34d399; }
+.chord-dot.finger-2 { fill: #fbbf24; }
+.chord-dot.finger-3 { fill: #f87171; }
+.chord-dot.finger-4 { fill: #f472b6; }
 
-.chord-barre {
-  fill: var(--color-primary);
-  opacity: 0.9;
-}
+.chord-barre { opacity: 0.95; }
+.chord-barre.finger-1 { fill: #34d399; }
+.chord-barre.finger-2 { fill: #fbbf24; }
+.chord-barre.finger-3 { fill: #f87171; }
+.chord-barre.finger-4 { fill: #f472b6; }
 
 .chord-finger-label {
-  fill: #1a140c;
-  font-size: 13px;
-  font-weight: 700;
+  fill: #0a0a0a;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 800;
   text-anchor: middle;
+  pointer-events: none;
 }
 
-.chord-finger-label-on-barre {
-  fill: #1a140c;
-}
-
-.chord-tip {
-  font-size: var(--fs-sm);
-  background-color: rgba(224, 164, 88, 0.1);
-  border: 1px solid rgba(224, 164, 88, 0.3);
-  border-radius: var(--radius-sm);
-  padding: var(--space-sm) var(--space-md);
-}
-
+/* ---------- Legend ---------- */
 .chord-finger-legend {
-  font-size: var(--fs-xs);
-  color: var(--color-text-faint);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
 }
 
-/* ---------- Practice Steps ---------- */
+.chord-finger-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.chord-finger-legend b { color: #ffffff; font-weight: 700; }
+
+/* ---------- Green chord tip ---------- */
+.chord-tip {
+  position: relative;
+  width: 100%;
+  padding: 0.95rem 1.1rem 0.95rem 1.15rem;
+  background-color: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.22);
+  border-left: 3px solid #34d399;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: #a7f3d0;
+  text-align: left;
+}
+
+.chord-tip::before {
+  content: "TIP";
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #34d399;
+  margin-right: 0.5rem;
+  vertical-align: 1px;
+}
+
+.chord-tip:empty { display: none; }
+
+/* ---------- Practice steps ---------- */
 .practice-steps-list {
   max-width: 480px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: 0.9rem;
   counter-reset: step-counter;
 }
 
 .practice-steps-list li {
   counter-increment: step-counter;
   display: flex;
-  gap: var(--space-sm);
+  gap: 0.85rem;
   align-items: flex-start;
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
+  line-height: 1.55;
 }
 
 .practice-steps-list li::before {
@@ -211,63 +320,277 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background-color: var(--color-surface-alt);
-  color: var(--color-primary);
-  font-weight: 700;
-  font-size: var(--fs-xs);
+  background-color: #ffffff;
+  color: #0a0a0a;
+  font-weight: 800;
+  font-size: 0.78rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 1px;
 }
 
-/* ---------- Switch Practice ---------- */
-.switch-practice {
-  max-width: 520px;
+/* ---------- Progressions ---------- */
+.progressions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+  max-width: 760px;
   margin-inline: auto;
-  text-align: center;
-}
-
-.switch-practice-pair {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  margin-block: var(--space-md);
-}
-
-.switch-slot {
-  flex: 1;
-  max-width: 160px;
-}
-
-.switch-slot-name {
-  font-weight: 700;
-  font-size: var(--fs-md);
-  margin-bottom: var(--space-xs);
-}
-
-.switch-arrow {
-  font-size: var(--fs-lg);
-  color: var(--color-primary);
-  flex-shrink: 0;
-}
-
-.switch-pair-label {
-  font-size: var(--fs-sm);
-  color: var(--color-text-faint);
-  margin-bottom: var(--space-sm);
-}
-
-/* ---------- Beginner Reminder ---------- */
-.beginner-reminder {
-  max-width: 560px;
-  margin: var(--space-xl) auto 0;
-  text-align: center;
-  font-size: var(--fs-sm);
 }
 
 @media (min-width: 700px) {
-  .chord-panel {
-    max-width: 480px;
+  .progressions-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+
+.progression-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.35rem 1.2rem 1.25rem;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+}
+
+@media (hover: hover) {
+  .progression-card:hover { border-color: #4a4a4a; }
+}
+
+/* Head: title + subtitle on left, play button on right */
+.progression-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.progression-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.progression-name {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.progression-subtitle {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  font-weight: 700;
+}
+
+/* Play button */
+.progression-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.85rem;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border-strong);
+  background-color: transparent;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              transform 0.15s ease;
+}
+
+.progression-play-btn:active { transform: scale(0.96); }
+
+@media (hover: hover) {
+  .progression-play-btn:hover {
+    background-color: #ffffff;
+    color: #0a0a0a;
+    border-color: #ffffff;
   }
+}
+
+.progression-play-btn.is-playing {
+  background-color: #34d399;
+  color: #0a0a0a;
+  border-color: #34d399;
+}
+
+.play-btn-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.play-btn-icon .icon-play { display: block; }
+.play-btn-icon .icon-stop { display: none; }
+
+.progression-play-btn.is-playing .icon-play { display: none; }
+.progression-play-btn.is-playing .icon-stop { display: block; }
+
+/* Chord sequence row */
+.progression-chords {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.progression-chord-btn {
+  min-width: 52px;
+  min-height: 52px;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border-strong);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.progression-chord-btn:active {
+  transform: scale(0.94);
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
+}
+
+@media (hover: hover) {
+  .progression-chord-btn:hover {
+    background-color: #ffffff;
+    color: #0a0a0a;
+    border-color: #ffffff;
+  }
+  /* Highlighted chord during progression playback */
+.progression-chord-btn.is-playing-chord {
+  background-color: #34d399;
+  color: #0a0a0a;
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18),
+              0 0 24px -4px rgba(52, 211, 153, 0.55);
+  animation: chordPlayingPulse 0.95s ease-in-out infinite;
+  z-index: 1;
+  position: relative;
+}
+
+@keyframes chordPlayingPulse {
+  0%, 100% { transform: scale(1.05); }
+  50%      { transform: scale(1.1);  }
+}
+
+/* If the user prefers reduced motion, don't pulse — just highlight */
+@media (prefers-reduced-motion: reduce) {
+  .progression-chord-btn.is-playing-chord {
+    animation: none;
+    transform: scale(1.05);
+  }
+}
+}
+
+.progression-arrow {
+  color: var(--color-text-faint);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: 0 0.1rem;
+  user-select: none;
+}
+
+.progression-desc {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ---------- Teacher note ---------- */
+.chord-note {
+  padding-block: 0 var(--space-xl);
+}
+
+.chord-note-card {
+  position: relative;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: 2rem 1.5rem 1.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.chord-note-card::before {
+  content: "";
+  position: absolute;
+  top: -1.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 2px;
+}
+
+.chord-note-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 0.9rem;
+}
+
+.chord-note-text {
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-size: clamp(1rem, 2.6vw, 1.1rem);
+  line-height: 1.65;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* ---------- Larger screens ---------- */
+@media (min-width: 700px) {
+  .chord-panel {
+    max-width: 540px;
+    padding: 2.25rem 1.75rem;
+  }
+
+  .chord-diagram-holder {
+    max-width: 320px;
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 420px) {
+  .progression-play-btn {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .play-btn-label { display: none; }
+  .play-btn-icon { width: 15px; height: 15px; }
 }

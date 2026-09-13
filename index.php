@@ -196,15 +196,12 @@ include __DIR__ . '/includes/navbar.php';
             <span>Guitarist</span>
           </p>
           <p class="instructor-note">
-            “I built this site so my students have somewhere to keep
-            practicing between lessons. Everything here is free to use
-            no sign-up. Just pick up your guitar and start.”
+            “This website is designed for beginners who want to learn guitar in a fun and interactive way. Dedicated learners are welcome here!”
           </p>
           <div class="instructor-actions">
             <a href="https://wa.me/9779822899750" target="_blank" rel="noopener" class="btn btn-primary">
               Message on WhatsApp
             </a>
-            <a href="tel:9822899750" class="btn btn-outline">Call 9822899750</a>
           </div>
         </div>
       </div>
