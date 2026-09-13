@@ -1,0 +1,231 @@
+/* =========================================================
+   FRETBOARD-GAME.CSS
+   Styles specific to pages/fretboard-game.php only.
+   ========================================================= */
+
+.game-intro {
+  padding-block: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.game-intro h1 {
+  font-size: var(--fs-2xl);
+}
+
+.game-intro p {
+  max-width: 520px;
+  margin: var(--space-sm) auto 0;
+}
+
+/* ---------- String selection (setup screen) ---------- */
+.game-setup {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.string-select-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  margin-block: var(--space-lg);
+}
+
+@media (min-width: 480px) {
+  .string-select-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.string-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  min-height: 52px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.string-checkbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+}
+
+.string-checkbox.is-checked {
+  border-color: var(--color-primary);
+  background-color: rgba(224, 164, 88, 0.1);
+}
+
+.game-setup-error {
+  color: var(--color-error);
+  font-size: var(--fs-sm);
+  min-height: 1.2em;
+  margin-bottom: var(--space-sm);
+}
+
+/* ---------- Game area ---------- */
+.game-area {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.game-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 560px) {
+  .game-stats-bar {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.game-stat {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm);
+  text-align: center;
+}
+
+.game-stat-value {
+  display: block;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.game-stat-label {
+  font-size: var(--fs-xs);
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.game-level-note {
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- Fretboard ---------- */
+.game-fretboard-holder {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.game-fretboard-svg {
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+  display: block;
+}
+
+.game-nut { stroke: var(--color-text); stroke-width: 5; }
+.game-fretline { stroke: var(--color-border); stroke-width: 2; }
+.game-stringline { stroke: var(--color-text-faint); stroke-width: 1.5; }
+.game-string-label { fill: var(--color-text-faint); font-size: 13px; font-weight: 700; text-anchor: middle; }
+.game-fret-marker { fill: var(--color-border); }
+.game-fret-number { fill: var(--color-text-faint); font-size: 11px; text-anchor: middle; }
+
+.game-question-dot {
+  fill: var(--color-primary);
+  stroke: var(--color-bg);
+  stroke-width: 2;
+}
+
+.game-question-pulse {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  opacity: 0.6;
+}
+
+/* ---------- Question + answers ---------- */
+.game-question {
+  text-align: center;
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-md);
+}
+
+.game-answers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  max-width: 420px;
+  margin: 0 auto var(--space-md);
+}
+
+.game-answer-btn {
+  min-height: 60px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.game-answer-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.game-answer-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.game-answer-btn.is-correct {
+  border-color: var(--color-success);
+  background-color: rgba(111, 191, 115, 0.18);
+  color: var(--color-success);
+}
+
+.game-answer-btn.is-incorrect {
+  border-color: var(--color-error);
+  background-color: rgba(226, 104, 95, 0.18);
+  color: var(--color-error);
+}
+
+.game-answer-btn:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.game-feedback {
+  text-align: center;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  min-height: 1.6em;
+  margin-bottom: var(--space-md);
+}
+
+.game-feedback.is-correct-text {
+  color: var(--color-success);
+}
+
+.game-feedback.is-incorrect-text {
+  color: var(--color-error);
+}
+
+.game-footer-actions {
+  text-align: center;
+  margin-top: var(--space-lg);
+}
