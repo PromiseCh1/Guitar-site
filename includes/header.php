@@ -11,7 +11,7 @@
 require_once __DIR__ . '/config.php';
 
 if (!isset($pageTitle)) {
-    $pageTitle = 'Promise Guitar Learning';
+    $pageTitle = 'Guitar Learning & Practice Tools for Beginners';
 }
 if (!isset($pageDescription)) {
     $pageDescription = 'Free interactive guitar lessons for beginners: chords, scales, metronome and a fretboard memorization game.';
