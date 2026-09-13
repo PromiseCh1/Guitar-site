@@ -1,13 +1,12 @@
 <?php
-
 /**
  * index.php
  * Home page: full-bleed hero photo, process, learning path,
  * tools with emoji icons, animated practice tips, instructor.
  */
 
-$pageTitle       = 'Beginner Guitar Practice Tools';
-$pageDescription = 'A free practice space for beginner guitar students: chord reference, scale charts, a metronome and a fretboard memorization game.';
+$pageTitle       = 'Guitar with Promise — Free Beginner Guitar Lessons & Practice Tools';
+$pageDescription = 'Learn guitar from the beginning with free beginner-friendly lessons, chord diagrams, scales, a metronome, and an interactive fretboard game.';
 $extraCss        = 'home.css';
 $currentPage     = 'home';
 $pageJs          = 'home.js';
@@ -187,20 +186,32 @@ include __DIR__ . '/includes/navbar.php';
       <div class="instructor-card">
         <div class="instructor-avatar">
           <img src="<?php echo BASE_URL; ?>/assets/images/general/pp.png"
-            alt="Promise Chaudhary, guitarist and guitar instructor">
+               alt="Promise Chaudhary, guitarist and guitar instructor">
         </div>
         <div class="instructor-body">
           <span class="instructor-eyebrow">From the Instructor</span>
-          <h2 class="instructor-name">Promise</h2>
+          <h2 class="instructor-name">Promise Chaudhary</h2>
           <p class="instructor-role">
-            <span>Guitarist</span>
+            <span>Guitarist</span> · Guitar Instructor · Lamahi, Nepal
           </p>
           <p class="instructor-note">
-            “This website is designed for beginners who want to learn guitar in a fun and interactive way. Dedicated learners are welcome here!”
+            “This website is completely free and always will be — I built it
+            so beginner guitarists have somewhere honest to practice. If it helps
+            you, sharing it with a friend or messaging me to say hi is the best
+            support you can give.”
           </p>
           <div class="instructor-actions">
             <a href="https://wa.me/9779822899750" target="_blank" rel="noopener" class="btn btn-primary">
               Message on WhatsApp
+            </a>
+            <a href="https://instagram.com/promisech_1" target="_blank" rel="noopener" class="btn-instagram-follow">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"
+                   stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+              <span>Follow me</span>
             </a>
           </div>
         </div>

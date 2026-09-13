@@ -7,8 +7,7 @@
  *   - Fretboard renders the low E string at the BOTTOM
  *     (standard tab orientation)
  *   - Pentatonic and Blues hide the formula + sequence blocks
- *   - SVG uses a taller viewBox and larger text so the notes stay
- *     readable when the fretboard is scaled down on mobile.
+ *   - Fretboard supports zoom (0.25× … 1.5× and Fit)
  *
  * Music theory reference:
  *   NOTES is the chromatic sequence starting from A (index 0),
@@ -33,8 +32,18 @@
 
   var FRETS_SHOWN = 12;
 
+  // Zoom levels — scale is a multiplier of the fretboard container
+  // width, so 1× always fits on any device.
+  var ZOOM_LEVELS = [
+    { label: '0.25×', scale: 0.25 },
+    { label: '0.5×',  scale: 0.5  },
+    { label: '0.75×', scale: 0.75 },
+    { label: '1×',    scale: 1.0  },  // default
+    { label: '1.5×',  scale: 1.5  },
+    { label: 'Fit',   scale: 1.0  }
+  ];
+
   // One color per scale degree. Index 0 = root (red).
-  // Each entry has a background and a text color chosen for contrast.
   var DEGREE_PALETTE = [
     { bg: '#ef4444', text: '#ffffff' }, // 1st (root)  — red
     { bg: '#f59e0b', text: '#0a0a0a' }, // 2nd         — amber
@@ -153,7 +162,7 @@
   }
 
   // ---------------------------------------------------------------
-  // FRETBOARD RENDERING (bigger text + dots for mobile readability)
+  // FRETBOARD RENDERING
   // ---------------------------------------------------------------
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -167,17 +176,6 @@
     return node;
   }
 
-  /**
-   * Renders a 6-string, 12-fret fretboard with the low E at the
-   * BOTTOM (standard tab orientation).
-   *
-   * The viewBox is taller (260 vs 220) and all text/dots are larger
-   * so the notes stay readable when the fretboard is scaled down on
-   * a phone screen.
-   *
-   * highlightFn(noteName, stringIndex, fret) -> degree index (0-based)
-   *     or null when the note is not in the scale.
-   */
   function renderFretboard(container, highlightFn) {
     var width        = 900;
     var height       = 260;
@@ -195,18 +193,15 @@
       'aria-label': 'Guitar fretboard, frets 1 through 12, low E at the bottom'
     });
 
-    // i = 0 (low E) sits at the BOTTOM; i = 5 (high E) at the TOP.
     function stringY(i) { return (height - bottomMargin) - i * stringGap; }
     function fretX(f) { return leftMargin + f * fretGap; }
 
-    // Nut
     svg.appendChild(el('line', {
       x1: fretX(0), x2: fretX(0),
       y1: stringY(0), y2: stringY(OPEN_STRINGS.length - 1),
       class: 'scale-nut'
     }));
 
-    // Fret lines
     for (var f = 1; f <= FRETS_SHOWN; f++) {
       svg.appendChild(el('line', {
         x1: fretX(f), x2: fretX(f),
@@ -215,7 +210,6 @@
       }));
     }
 
-    // Fret markers
     var midY = (stringY(0) + stringY(OPEN_STRINGS.length - 1)) / 2;
     [3, 5, 7, 9].forEach(function (f) {
       svg.appendChild(el('circle', {
@@ -230,7 +224,6 @@
       }));
     });
 
-    // Strings + labels + note dots
     OPEN_STRINGS.forEach(function (str, si) {
       var y = stringY(si);
 
@@ -272,7 +265,6 @@
       }
     });
 
-    // Fret numbers along the bottom
     for (var fn = 1; fn <= FRETS_SHOWN; fn++) {
       var fLabel = el('text', {
         x: fretX(fn) - fretGap / 2,
@@ -304,7 +296,14 @@
   var elLegend    = document.getElementById('scaleLegend');
   var tabButtons  = document.querySelectorAll('.scale-tab');
 
+  // Zoom elements
+  var zoomInBtn   = document.getElementById('zoomInBtn');
+  var zoomOutBtn  = document.getElementById('zoomOutBtn');
+  var zoomLabelEl = document.getElementById('zoomLevelLabel');
+  var scrollHintEl = document.getElementById('scrollHint');
+
   var activeScaleId = 'chromatic';
+  var currentZoomIndex = 3; // default = 1×
 
   // ---------------------------------------------------------------
   // PANEL RENDERERS
@@ -392,6 +391,66 @@
     });
   }
 
+  // ---------------------------------------------------------------
+  // ZOOM
+  // ---------------------------------------------------------------
+  function getBaseWidth() {
+    var holder = document.querySelector('.scale-fretboard-holder');
+    if (holder) {
+      var w = holder.clientWidth - 20; // subtract padding
+      return Math.max(260, w);
+    }
+    return Math.max(260, window.innerWidth - 40);
+  }
+
+  function applyZoom() {
+    if (!elBoard) return;
+    var svg = elBoard.querySelector('.scale-fretboard-svg');
+    if (!svg) return;
+
+    var level = ZOOM_LEVELS[currentZoomIndex];
+    var baseW = getBaseWidth();
+    var targetW = Math.round(baseW * level.scale);
+
+    svg.style.minWidth = targetW + 'px';
+    svg.style.width    = targetW + 'px';
+
+    if (zoomLabelEl) zoomLabelEl.textContent = level.label;
+    if (zoomOutBtn) zoomOutBtn.disabled = (currentZoomIndex === 0);
+    if (zoomInBtn)  zoomInBtn.disabled  = (currentZoomIndex === ZOOM_LEVELS.length - 1);
+
+    // Show the swipe hint only when the SVG is wider than its container
+    var needsScroll = targetW > baseW + 4;
+    if (scrollHintEl) scrollHintEl.classList.toggle('is-hidden', !needsScroll);
+  }
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', function () {
+      if (currentZoomIndex < ZOOM_LEVELS.length - 1) {
+        currentZoomIndex++;
+        applyZoom();
+      }
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', function () {
+      if (currentZoomIndex > 0) {
+        currentZoomIndex--;
+        applyZoom();
+      }
+    });
+  }
+
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(applyZoom, 120);
+  });
+
+  // ---------------------------------------------------------------
+  // PANEL
+  // ---------------------------------------------------------------
   function renderPanel() {
     var def = SCALE_DEFS[activeScaleId];
     if (!def) return;
@@ -399,14 +458,10 @@
     if (elName)  elName.textContent = def.name;
     if (elBadge) elBadge.textContent = def.badge;
 
-    if (def.hasRoot) {
-      elRootRow.hidden = false;
-    } else {
-      elRootRow.hidden = true;
-    }
+    if (elRootRow) elRootRow.hidden = !def.hasRoot;
 
     if (elFormulaBlk) elFormulaBlk.hidden = !def.showFormula;
-    if (elSeqBlk)     elSeqBlk.hidden = !def.showSequence;
+    if (elSeqBlk)     elSeqBlk.hidden     = !def.showSequence;
 
     var root = def.hasRoot
       ? (elRootSel ? elRootSel.value : 'C')
@@ -429,6 +484,9 @@
       var idx = scaleNotes.indexOf(note);
       return idx === -1 ? null : idx;
     });
+
+    // Reapply the current zoom to the freshly rendered SVG
+    applyZoom();
 
     renderLegend(scaleNotes);
   }

@@ -6,8 +6,8 @@
  * Game: zoomable fretboard with countdown timer (Easy/Medium/Hard only).
  */
 
-$pageTitle       = 'Fretboard Game — Promise Guitar Learning';
-$pageDescription = 'Learn the guitar fretboard with a note-memorization game. Easy, Medium, Hard, and Manual practice modes.';
+$pageTitle       = 'Guitar Fretboard Note Game — Guitar with Promise';
+$pageDescription = 'Test your guitar fretboard knowledge with a free interactive note memorization game for beginners.';
 $extraCss        = 'fretboard-game.css';
 $currentPage     = 'game';
 $pageJs          = 'fretboard-game.js';

@@ -3,7 +3,7 @@
  * navbar.php
  * Responsive site navigation, included on every page.
  * Expects (optional):
- *   $currentPage - 'home' | 'chords' | 'scales' | 'metronome' | 'game'
+ *   $currentPage - 'home' | 'chords' | 'scales' | 'metronome' | 'game' | 'support'
  */
 
 require_once __DIR__ . '/logo.php';
@@ -20,11 +20,11 @@ function nav_active_attrs($linkId, $currentPage) {
 ?>
 <header class="site-header">
   <div class="container navbar">
-    <a href="<?php echo BASE_URL; ?>/index.php" class="navbar-brand" aria-label="Promise Guitar — home">
+    <a href="<?php echo BASE_URL; ?>/index.php" class="navbar-brand" aria-label="Guitar with Promise — home">
       <span class="brand-mark"><?php render_logo_mark(30); ?></span>
       <span class="brand-text">
-        <span class="brand-name">Learn with Promise </span>
-        <span class="brand-sub">Learn to Play</span>
+        <span class="brand-name">Guitar with Promise</span>
+        <span class="brand-sub">Learn. Practice. Play.</span>
       </span>
     </a>
 
@@ -40,6 +40,7 @@ function nav_active_attrs($linkId, $currentPage) {
       <a href="<?php echo BASE_URL; ?>/pages/scales.php" <?php nav_active_attrs('scales', $currentPage); ?>>Scales</a>
       <a href="<?php echo BASE_URL; ?>/pages/metronome.php" <?php nav_active_attrs('metronome', $currentPage); ?>>Metronome</a>
       <a href="<?php echo BASE_URL; ?>/pages/fretboard-game.php" <?php nav_active_attrs('game', $currentPage); ?>>Fretboard Game</a>
+      <a href="<?php echo BASE_URL; ?>/pages/support.php" <?php nav_active_attrs('support', $currentPage); ?>>Support Me</a>
     </nav>
   </div>
 </header>

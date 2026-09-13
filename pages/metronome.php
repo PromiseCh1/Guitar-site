@@ -4,9 +4,8 @@
  * Interactive Web Audio API metronome: BPM control, tap tempo,
  * 4/4 time with accented beat 1, and None/8th/16th subdivisions.
  */
-
-$pageTitle       = 'Metronome — Promise Guitar Learning';
-$pageDescription = 'A free online metronome for guitar practice: adjustable BPM, tap tempo, and 8th/16th note subdivisions.';
+$pageTitle       = 'Free Online Guitar Metronome — Guitar with Promise';
+$pageDescription = 'Practice guitar timing with a free online metronome featuring adjustable BPM, tap tempo, accents, and subdivisions.';
 $extraCss        = 'metronome.css';
 $currentPage     = 'metronome';
 $pageJs          = 'metronome.js';

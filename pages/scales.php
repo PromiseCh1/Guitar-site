@@ -5,8 +5,8 @@
  * Mobile-optimized: swipe hint above the fretboard, thumb-friendly tabs.
  */
 
-$pageTitle       = 'Scales — Promise Guitar Learning';
-$pageDescription = 'Beginner-friendly scale reference with an interactive fretboard: Chromatic, Major, Minor Pentatonic, and Blues.';
+$pageTitle       = 'Guitar Scales for Beginners — Guitar with Promise';
+$pageDescription = 'Learn basic guitar scales with simple fretboard patterns, root notes, and beginner-friendly explanations.';
 $extraCss        = 'scales.css';
 $currentPage     = 'scales';
 $pageJs          = 'scales.js';
@@ -78,9 +78,22 @@ include __DIR__ . '/../includes/navbar.php';
             <span>Swipe to see all 12 frets</span>
             <span class="scroll-hint-arrow">→</span>
           </p>
+           <div class="scale-fretboard-wrap">
+          <div class="scale-fretboard-toolbar">
+            <p class="scale-scroll-hint" id="scrollHint" aria-hidden="true">
+              <span>Swipe to see all 12 frets</span>
+              <span class="scroll-hint-arrow">→</span>
+            </p>
+            <div class="fretboard-zoom-controls" role="group" aria-label="Fretboard zoom">
+              <button type="button" class="zoom-btn" id="zoomOutBtn" aria-label="Zoom out">&minus;</button>
+              <span class="zoom-label" id="zoomLevelLabel">1×</span>
+              <button type="button" class="zoom-btn" id="zoomInBtn" aria-label="Zoom in">&plus;</button>
+            </div>
+          </div>
           <div class="scale-fretboard-holder">
             <div id="scaleFretboard"></div>
           </div>
+        </div>
         </div>
 
         <div class="scale-legend" id="scaleLegend"></div>

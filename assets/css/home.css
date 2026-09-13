@@ -309,18 +309,33 @@
 .tool-card:focus-visible .tool-link span {
   transform: translateX(3px);
 }
-/* ---------- ANIMATED TIPS ---------- */
+
+/* =========================================================
+   ANIMATED TIPS — tightened spacing
+   ========================================================= */
+
+/* Reduce the section padding + heading gap just for the tips block
+   without touching the shared .section / .section-heading rules. */
+.section:has(.tips-showcase) {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.section:has(.tips-showcase) .section-heading {
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+}
+
 .tips-showcase {
   position: relative;
-  min-height: 260px;
+  min-height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem 0;
+  padding: 0.5rem 0;
   overflow: hidden;
 }
 
+/* Font styling stays exactly as before */
 .tip-display {
   font-family: var(--font-serif);
   font-size: clamp(1.5rem, 4.5vw, 2.6rem);
@@ -346,10 +361,9 @@
 }
 
 @media (max-width: 480px) {
-  .tips-showcase { min-height: 200px; padding: 1.5rem 0; }
+  .tips-showcase { min-height: 130px; padding: 0.25rem 0; }
   .tip-display { line-height: 1.4; }
 }
-
 
 /* ---------- INSTRUCTOR ---------- */
 .instructor-card {
@@ -473,4 +487,90 @@
 @media (max-width: 480px) {
   .instructor-actions { flex-direction: column; }
   .instructor-actions .btn { width: 100%; }
+}
+
+/* Instagram follow button */
+.btn-instagram {
+  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 100%);
+  color: #ffffff;
+  border-color: transparent;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.btn-instagram:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 8px 22px -12px rgba(221, 42, 123, 0.6);
+}
+
+.btn-instagram .btn-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Full-width stacked variant */
+.btn-instagram-block {
+  display: inline-flex;
+  margin-top: 1rem;
+}
+
+@media (max-width: 480px) {
+  .btn-instagram-block {
+    display: flex;
+    width: 100%;
+  }
+}
+
+/* Small, clean Instagram follow button — gradient style */
+.btn-instagram-follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 100%);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: filter 0.2s ease,
+              box-shadow 0.2s ease,
+              transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.btn-instagram-follow svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.btn-instagram-follow:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .btn-instagram-follow:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 8px 22px -12px rgba(221, 42, 123, 0.6);
+  }
+}
+
+/* On very small screens, both buttons become full-width */
+@media (max-width: 480px) {
+  .instructor-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .instructor-actions .btn,
+  .btn-instagram-follow {
+    width: 100%;
+    justify-content: center;
+  }
 }

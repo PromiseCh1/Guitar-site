@@ -1,0 +1,176 @@
+/* =========================================================
+   SUPPORT.CSS
+   Support Me page — simple, clean, matches the rest of the site.
+   ========================================================= */
+
+main#main-content {
+  --font-serif: var(--font-sans);
+}
+
+/* ---------- INTRO ---------- */
+.support-intro {
+  padding-block: clamp(2rem, 6vw, 3.25rem) var(--space-md);
+  text-align: center;
+}
+
+.support-intro h1 {
+  font-size: clamp(1.8rem, 5.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+}
+
+.support-lead {
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: var(--fs-md);
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* ---------- SUPPORT CARD ---------- */
+.support-section {
+  padding-block: 0 var(--space-xl);
+}
+
+.support-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.4rem;
+  max-width: 520px;
+  margin-inline: auto;
+  padding: clamp(1.75rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 2rem);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- QR IMAGE ---------- */
+.support-qr-img {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+@media (min-width: 480px) {
+  .support-qr-img { max-width: 320px; }
+}
+
+/* ---------- DETAILS LIST ---------- */
+.support-details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0.4rem 1.1rem;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.support-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.support-detail:last-child { border-bottom: none; }
+
+.support-detail dt {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin: 0;
+}
+
+.support-detail dd {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: right;
+}
+
+/* ---------- MOMO — friendly text, not a button ---------- */
+.support-momo {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ff8bc0;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.support-momo span {
+  display: inline-block;
+  font-style: normal;
+  margin-left: 0.15rem;
+}
+
+.support-note {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 400px;
+  margin: 0;
+}
+
+/* ---------- THANK-YOU FOOTER ---------- */
+.support-thanks {
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.support-thanks strong {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ---------- BACK LINK ---------- */
+.support-back {
+  padding-block: 0 var(--space-2xl);
+  text-align: center;
+}
+
+/* ---------- VERY SMALL SCREENS ---------- */
+@media (max-width: 380px) {
+  .support-card {
+    padding: 1.4rem 1rem;
+    gap: 1.2rem;
+  }
+
+  .support-qr-img { max-width: 240px; }
+
+  .support-detail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .support-detail dd { text-align: left; }
+
+  .support-momo {
+    font-size: 0.95rem;
+  }
+}

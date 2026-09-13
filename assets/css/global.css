@@ -1,7 +1,8 @@
 /* =========================================================
    GLOBAL.CSS
    Monochrome black & white design system.
-   Tokens, reset, typography, shared components, navbar, footer.
+   Transparent navbar, tokens, reset, typography, shared
+   components, footer.
    ========================================================= */
 
 /* ---------- Design tokens ---------- */
@@ -109,7 +110,9 @@ body {
   font-size: var(--fs-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* clip prevents horizontal overflow without creating a containing
+     block (which `hidden` can do, breaking fixed positioning). */
+  overflow-x: clip;
 }
 
 main {
@@ -272,17 +275,33 @@ select:focus-visible,
 }
 
 /* =========================================================
-   NAVBAR
+   NAVBAR — transparent
    ========================================================= */
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--navbar-height);
   z-index: 100;
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Solid background appears once the user scrolls past ~20px.
+   Remove this block if you want it fully transparent always. */
+.site-header.is-scrolled {
   background-color: rgba(10, 10, 10, 0.85);
+  border-bottom-color: var(--color-border);
+}
+
+.site-header.is-scrolled::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--color-border);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .navbar {
@@ -345,9 +364,13 @@ select:focus-visible,
   height: 44px;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
+  position: relative;
+  z-index: 102;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.nav-toggle:hover { background-color: var(--color-surface); }
+.nav-toggle:hover { background-color: rgba(255, 255, 255, 0.08); }
 
 .nav-toggle .bar {
   width: 22px;
@@ -367,9 +390,11 @@ select:focus-visible,
 
 /* Mobile menu */
 .nav-menu {
-  position: fixed;
-  top: var(--navbar-height);
-  left: 0; right: 0; bottom: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: calc(100vh - var(--navbar-height));
   background-color: #0a0a0a;
   border-top: 1px solid var(--color-border);
   display: flex;
@@ -379,6 +404,7 @@ select:focus-visible,
   transform: translateX(100%);
   transition: transform var(--transition-base);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-menu.is-open { transform: translateX(0); }
@@ -399,12 +425,17 @@ select:focus-visible,
 
 .nav-menu a.active { color: #ffffff; }
 
+/* Lock the page behind the menu while it's open */
+body.nav-open { overflow: hidden; }
+
 /* Desktop nav */
 @media (min-width: 860px) {
   .nav-toggle { display: none; }
 
   .nav-menu {
     position: static;
+    top: auto;
+    height: auto;
     transform: none;
     flex-direction: row;
     align-items: center;

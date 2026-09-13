@@ -6,8 +6,8 @@
  * practice progressions (with audio playback), and a teacher's note.
  */
 
-$pageTitle       = 'Chords — Promise Guitar Learning';
-$pageDescription = 'Beginner-friendly guitar chord diagrams with colored finger positions and playable practice progressions.';
+$pageTitle       = 'Guitar Chords for Beginners — Guitar with Promise';
+$pageDescription = 'Learn common major and minor guitar chords with clear chord diagrams and beginner-friendly finger positions.';
 $extraCss        = 'chords.css';
 $currentPage     = 'chords';
 $pageJs          = 'chords.js';
