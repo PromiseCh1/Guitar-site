@@ -1,0 +1,193 @@
+/* =========================================================
+   METRONOME.CSS
+   Styles specific to pages/metronome.php only.
+   ========================================================= */
+
+.metronome-intro {
+  padding-block: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.metronome-intro h1 {
+  font-size: var(--fs-2xl);
+}
+
+.metronome-intro p {
+  max-width: 520px;
+  margin: var(--space-sm) auto 0;
+}
+
+.metronome-panel {
+  max-width: 420px;
+  margin: 0 auto var(--space-2xl);
+  text-align: center;
+}
+
+/* ---------- BPM display ---------- */
+.bpm-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.bpm-value {
+  font-size: 3.2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  min-width: 140px;
+}
+
+.bpm-unit {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-text-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.bpm-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.bpm-btn:hover {
+  border-color: var(--color-primary);
+}
+
+.bpm-btn:active {
+  transform: scale(0.92);
+}
+
+.bpm-fine-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.bpm-fine-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  min-height: 36px;
+}
+
+.bpm-fine-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ---------- Beat indicator ---------- */
+.beat-indicator {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.beat-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-surface-alt);
+  border: 2px solid var(--color-border);
+  transition: background-color 0.08s ease, border-color 0.08s ease, transform 0.08s ease;
+}
+
+.beat-dot.is-active {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  transform: scale(1.25);
+}
+
+.beat-dot.is-accent.is-active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ---------- Main controls ---------- */
+.metronome-main-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.metronome-main-controls .btn {
+  min-height: 56px;
+  font-size: var(--fs-md);
+}
+
+@media (min-width: 480px) {
+  .metronome-main-controls {
+    flex-direction: row;
+  }
+
+  .metronome-main-controls .btn {
+    flex: 1;
+  }
+}
+
+/* ---------- Subdivision selector ---------- */
+.subdivision-group {
+  margin-bottom: var(--space-lg);
+}
+
+.subdivision-group h3 {
+  font-size: var(--fs-sm);
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-sm);
+}
+
+.subdivision-options {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.subdivision-btn {
+  flex: 1;
+  padding: 0.7rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  min-height: 48px;
+}
+
+.subdivision-btn.is-active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: rgba(224, 164, 88, 0.1);
+}
+
+/* ---------- Status text ---------- */
+.metronome-status {
+  font-size: var(--fs-sm);
+  color: var(--color-text-faint);
+  min-height: 1.2em;
+}
+
+.metronome-audio-note {
+  font-size: var(--fs-xs);
+  color: var(--color-text-faint);
+  margin-top: var(--space-md);
+}
